@@ -1,0 +1,14 @@
+{
+  "name": "vendor/sofort",
+  "description": "Sofort",
+  "type": "project",
+  "require": {
+    "sofort/sofortlib-php": "^3.3"
+  },
+  "authors": [
+    {
+      "name": "Birgit Olzem",
+      "email": "coachbirgit@gmail.com"
+    }
+  ]
+}
