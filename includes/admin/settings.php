@@ -38,18 +38,6 @@ function give_register_sofort_settings( $settings ) {
             'type' => 'text',
         ),
         array(
-            'id'   => 'sofort_sandbox_config_key',
-            'name' => __( 'Sandbox Config Key', 'give-sofort' ),
-            'desc' => __( 'Enter your stage account Sofort Config Key', 'give-sofort' ),
-            'type' => 'text',
-        ),
-        array(
-            'id'   => 'sofort_sandbox_reason',
-            'name' => __( 'Sandbox Reason', 'give-sofort' ),
-            'desc' => __( 'Enter your stage account Sofort reason', 'give-sofort' ),
-            'type' => 'text',
-        ),
-        array(
             'name'    => __( 'Billing Details', 'give' ),
             'desc'    => __( 'This option will enable the billing details section for Sofort. which requires the donor\'s address to complete the donation. These fields are not required by PayPal to process the transaction, but you may have a need to collect the data.', 'give' ),
             'id'      => 'sofort_billing_details',

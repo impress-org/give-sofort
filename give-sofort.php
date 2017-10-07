@@ -9,6 +9,13 @@ Author URI: http://coachbirgit.com
 License: A "Slug" license name e.g. GPL2
 */
 
+
+//Exit if accessed directly
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 //Plugin version.
 if ( ! defined( 'GIVE_SOFORT_VERSION' ) ) {
     define( 'GIVE_SOFORT_VERSION', '1.0' );
@@ -17,6 +24,7 @@ if ( ! defined( 'GIVE_SOFORT_VERSION' ) ) {
 // Plugin Folder Path.
 if ( ! defined( 'GIVE_SOFORT_DIR' ) ) {
     define( 'GIVE_SOFORT_DIR', plugin_dir_path( __FILE__ ) );
+	/** @define "GIVE_SOFORT_DIR" "/Users/coachbirgit/PhpstormProjects/give-sofort" */
 }
 
 //Plugin Folder URL.
@@ -33,6 +41,8 @@ if ( ! defined( 'GIVE_SOFORT_API_VERSION' ) ) {
  * Class Give_Sofort_Gateway
  */
 class Give_Sofort_Gateway {
+
+
 
     /** Singleton *************************************************************/
 
@@ -69,9 +79,11 @@ class Give_Sofort_Gateway {
         add_action( 'give_sofort_cc_form', '__return_false' );
 
         //Includes
-        require_once GIVE_SOFORT_DIR . 'includes/admin/settings.php';
-        require_once GIVE_SOFORT_DIR . 'vendor/sofort.php';
+        include_once GIVE_SOFORT_DIR . 'includes/admin/settings.php';
+	    include_once GIVE_SOFORT_DIR . 'vendor/class-sofort-payment.php';
 
+	    //include_once GIVE_SOFORT_DIR . 'vendor/php-console/php-console/src/PhpConsole/__autoload.php';
+		//$isActiveClient = PhpConsole\Connector::getInstance()->isActiveClient();
 
     }
 

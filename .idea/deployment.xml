@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData">
+    <serverData>
+      <paths name="WP Sandbox">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/var/www/public/exuberant-alligator/wp-content/plugins/give-sofort" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="local">
+        <serverdata>
+          <mappings>
+            <mapping deploy="give-sofort" local="$PROJECT_DIR$" web="/donations/spende-fuer-ein-projekt/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
