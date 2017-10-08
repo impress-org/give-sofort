@@ -12,13 +12,8 @@
 // No direct access is allowed
 if( ! defined( 'ABSPATH' ) ) exit;
 
-//namespace Sofort\SofortLib;
-
 require GIVE_SOFORT_DIR . 'vendor/autoload.php';
-//use Sofort\SofortLib\Multipay;
 
-
-//var_dump(file_exists(GIVE_SOFORT_DIR . "vendor/autoload.php"));
 
 if( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 
@@ -106,7 +101,7 @@ if( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 					'currency'        => give_get_currency(),
 					'user_info'       => $purchase_data['user_info'],
 					'status'          => 'pending', /** THIS MUST BE SET TO PENDING TO AVOID PHP WARNINGS */
-					'gateway'         => 'give_sofort' /** USE YOUR SLUG AGAIN HERE */
+					'gateway'         => 'sofort' /** USE YOUR SLUG AGAIN HERE */
 				);
 
 				$payment_id = give_insert_payment( $payment_data );
@@ -152,89 +147,85 @@ if( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 				} else {
 
 
-					// buyer must be redirected to $paymentUrl else payment cannot be successfully completed!
-					$paymentUrl = $api->getPaymentUrl();
-					header('Location: '.$paymentUrl);
+                // buyer must be redirected to $paymentUrl else payment cannot be successfully completed!
+                $paymentUrl = $api->getPaymentUrl();
+                header('Location: '.$paymentUrl);
 
+                $api = new Sofort\SofortLib\Notification();
 
-					$api = new Sofort\SofortLib\Notification();
-					//$TestNotification = $api->getNotification(file_get_contents('php://input'));
+                // get unique transaction-ID useful for check payment status
+                $txn_id = $api->getTransactionId();
 
-					// get unique transaction-ID useful for check payment status
-					$txn_id = $api->getTransactionId();
+                $data = new SofortLib_TransactionData( $api_config_key );
+                $data->setTransaction( $txn_id );
+                $data->sendRequest();
 
-					$data = new SofortLib_TransactionData( $api_config_key );
-					$data->setTransaction( $txn_id );
-					$data->sendRequest();
+                $reason = $data->getStatusReason();
+                $order_id = $data->getUserVariable( 0 );
+                $first_name = $data->getUserVariable( 1 );
+                $last_name = $data->getUserVariable( 2 );
+                $email = $data->getUserVariable( 3 );
+                $order_key = $data->getUserVariable( 4 );
+                $status = $data->getStatus();
 
-					$reason = $data->getStatusReason();
-					$order_id = $data->getUserVariable( 0 );
-					$first_name = $data->getUserVariable( 1 );
-					$last_name = $data->getUserVariable( 2 );
-					$email = $data->getUserVariable( 3 );
-					$order_key = $data->getUserVariable( 4 );
-					$status = $data->getStatus();
+                // record the payment which is super important so you have the proper records in the Give administration
+                $payment = give_insert_payment( $payment_data );
 
-                    // record the payment which is super important so you have the proper records in the Give administration
-                    $payment = give_insert_payment( $payment_data );
+                if ( $payment && $status == 'received' ) {
+                    give_update_payment_status( $payment, 'publish' ); /** This line will finalize the donation, you can run some other verification function if you want before setting to publish */
+                    give_send_to_success_page();
+                } else {
 
-                    if ( $payment && $status == 'received' ) {
-                        give_update_payment_status( $payment, 'publish' ); /** This line will finalize the donation, you can run some other verification function if you want before setting to publish */
-                        give_send_to_success_page();
-                    } else {
+                    // Log with DB.
+                    give_record_gateway_error( esc_html__( 'Sofort. Error', 'give-sofort' ), sprintf( __( 'An error happened while processing a donation.<br><br>Details: %1$s <br><br>Code: %2$s', 'give-sofort' ), $exception->getMessage(), $exception->getCode() ) );
 
-                        // Log with DB.
-                        give_record_gateway_error( esc_html__( 'Sofort. Error', 'give-sofort' ), sprintf( __( 'An error happened while processing a donation.<br><br>Details: %1$s <br><br>Code: %2$s', 'give-sofort' ), $exception->getMessage(), $exception->getCode() ) );
+                    // Display error for user.
+                    give_set_error( 'sofort_error', $error_message );
 
-                        // Display error for user.
-                        give_set_error( 'sofort_error', $error_message );
+                    // if errors are present, send the user back to the donation form so they can be corrected
+                    give_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['give-gateway'] );
+                }
 
-                        // if errors are present, send the user back to the donation form so they can be corrected
-                        give_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['give-gateway'] );
-                    }
+            }
+        } // end if $errors
 
-				}
-            } // end if $errors
-
-			// Return api if set.
-			if ( isset( $api ) ) {
-				return $api;
-			} else {
-				return false;
-			}
-
+        // Return api if set.
+        if ( isset( $api ) ) {
+            return $api;
+        } else {
+            return false;
         }
 
-		function give_log_sofort_error( $exception ) {
+    }
 
-			$generic_message = esc_html__( 'An error occurred during processing of the donation.', 'give-sofort' );
-			$error_message = $generic_message . ' ' . esc_html__( 'Please try again.', 'give-sofort' );
-		}
+    function give_log_sofort_error( $exception ) {
 
-		/**
-		 * Set notice for offline donation.
-		 *
-		 * @since 1.7
-		 *
-		 * @param string $notice
-		 * @param int    $id
-		 *
-		 * @return string
-		 */
-		function give_sofort_donation_receipt_status_notice( $notice, $id ) {
-			$payment = new Give_Payment( $id );
+        $generic_message = esc_html__( 'An error occurred during processing of the donation.', 'give-sofort' );
+        $error_message = $generic_message . ' ' . esc_html__( 'Please try again.', 'give-sofort' );
+    }
 
-			if ( 'give_sofort' !== $payment->gateway || $payment->is_completed() ) {
-				return $notice;
-			}
+    /**
+     * Set notice for offline donation.
+     *
+     * @since 1.7
+     *
+     * @param string $notice
+     * @param int    $id
+     *
+     * @return string
+     */
+    function give_sofort_donation_receipt_status_notice( $notice, $id ) {
+        $payment = new Give_Payment( $id );
 
-			return Give()->notices->print_frontend_notice( __( 'Payment Pending: Please follow the instructions below to complete your donation.', 'give' ), false, 'warning' );
-		}
+        if ( 'sofort' !== $payment->gateway || $payment->is_completed() ) {
+            return $notice;
+        }
 
+        return Give()->notices->print_frontend_notice( __( 'Payment Pending: Please follow the instructions below to complete your donation.', 'give' ), false, 'warning' );
+    }
+        
 
-
-
-		} // give_process_sofort_payment()
+    } // give_process_sofort_payment()
 
 	return new Give_Sofort_Gateway_Processor();
 
