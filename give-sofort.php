@@ -36,7 +36,7 @@ if ( ! defined( 'GIVE_SOFORT_URL' ) ) {
 if ( ! defined( 'GIVE_SOFORT_API_VERSION' ) ) {
     define( 'GIVE_SOFORT_API_VERSION', apply_filters( 'give_sofort_api_version', '' ) );
 }
-
+require GIVE_SOFORT_DIR . 'vendor/autoload.php';
 /**
  * Class Give_Sofort_Gateway
  */
@@ -74,6 +74,7 @@ class Give_Sofort_Gateway {
 
         // Filters
         add_filter( 'give_payment_gateways', array( $this, 'register_gateway' ) );
+
         // Actions
         //Sofort Gateway does not need a CC form, so remove it.
         add_action( 'give_sofort_cc_form', '__return_false' );
@@ -81,9 +82,6 @@ class Give_Sofort_Gateway {
         //Includes
         include_once GIVE_SOFORT_DIR . 'includes/admin/settings.php';
 	    include_once GIVE_SOFORT_DIR . 'vendor/class-sofort-payment.php';
-
-	    //include_once GIVE_SOFORT_DIR . 'vendor/php-console/php-console/src/PhpConsole/__autoload.php';
-		//$isActiveClient = PhpConsole\Connector::getInstance()->isActiveClient();
 
     }
 

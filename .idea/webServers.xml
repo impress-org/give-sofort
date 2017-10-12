@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="fb8ab870-ae66-4abe-a172-6bdd8fcf2c7f" name="w4.wpsandbox.pro" url="http://exuberant-alligator.w4.wpsandbox.pro/">
+        <fileTransfer host="w4.wpsandbox.pro" port="2222" rootFolder="/var/www/public/exuberant-alligator" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="2222" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
