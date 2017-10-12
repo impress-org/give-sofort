@@ -26,11 +26,17 @@ function give_register_sofort_settings( $settings ) {
             'type' => 'give_title'
         ),
         array(
-            'id'   => 'sofort_config_key',
+            'id'   => 'live_sofort_config_key',
             'name' => __( 'Live config key', 'give-sofort' ),
-            'desc' => __( 'Enter your live Sofort config key', 'give-sofort' ),
+            'desc' => __( 'Enter your liveproject Sofort config key', 'give-sofort' ),
             'type' => 'text',
         ),
+	    array(
+		    'id'   => 'sandbox_sofort_config_key',
+		    'name' => __( 'Test config key', 'give-sofort' ),
+		    'desc' => __( 'Enter your testproject Sofort config key', 'give-sofort' ),
+		    'type' => 'text',
+	    ),
         array(
             'id'   => 'sofort_reason',
             'name' => __( 'Reason', 'give-sofort' ),
@@ -48,6 +54,17 @@ function give_register_sofort_settings( $settings ) {
                 'disabled' => __( 'Disabled', 'give' ),
             )
         ),
+	    array(
+		    'name'    => __( 'Trust pending payments', 'give' ),
+		    'desc'    => __( 'This option will set the donation as success. Accept pending payments from sofort.com and complete donation.', 'give' ),
+		    'id'      => 'sofort_trust_pending',
+		    'type'    => 'radio_inline',
+		    'default' => 'enabled',
+		    'options' => array(
+			    'enabled'  => __( 'Enabled', 'give' ),
+			    'disabled' => __( 'Disabled', 'give' ),
+		    )
+	    ),
        ) );
 
     return array_merge( $settings, $sofort_settings );
