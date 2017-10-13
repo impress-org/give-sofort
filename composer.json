@@ -1,0 +1,18 @@
+{
+  "name": "vendor/sofort",
+  "description": "Sofort",
+  "type": "project",
+  "require": {
+    "sofort/sofortlib-php": "^3.3"
+  },
+  "autoload": {
+    "classmap": [
+      "vendor/Sofort/sofortlib-php/src/Sofort/Sofortueberweisung.php"]
+  },
+  "authors": [
+    {
+      "name": "Birgit Olzem",
+      "email": "coachbirgit@gmail.com"
+    }
+  ]
+}

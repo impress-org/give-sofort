@@ -1,0 +1,112 @@
+# Copyright (C) 2017 Give
+# This file is distributed under the same license as the Give package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Give\n"
+"Report-Msgid-Bugs-To: https://github.com/WordImpress/Give/issues/new\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2017-10-12 21:58+0200\n"
+"Language-Team: WordImpress <info@wordimpress.com>\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"POT-Creation-Date: \n"
+"X-Generator: Poedit 2.0.4\n"
+"Last-Translator: Birgit Olzem <coachbirgit@gmail.com>\n"
+"Language: de\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: give-sofort.php:118
+msgid "Sofort&uuml;berweisung"
+msgstr "Sofortüberweisung"
+
+#: give-sofort.php:121
+msgid "Sofort"
+msgstr "Sofort"
+
+#: includes/admin/settings.php:23
+msgid "Sofort Settings"
+msgstr "Sofort Einstellungen"
+
+#: includes/admin/settings.php:30
+msgid "Live config key"
+msgstr "Live Konfigurationsschlüssel"
+
+#: includes/admin/settings.php:31
+msgid "Enter your liveproject Sofort config key"
+msgstr "Hier den Konfigurationsschlüssel für das Live Projekt eingeben."
+
+#: includes/admin/settings.php:36
+msgid "Test config key"
+msgstr "Test Konfigurationsschlüssel"
+
+#: includes/admin/settings.php:37
+msgid "Enter your testproject Sofort config key"
+msgstr ""
+"Hier den Konfigurationsschlüssel für das Projekt im Testmodus eingeben."
+
+#: includes/admin/settings.php:42
+msgid "Reason"
+msgstr "Verwendungszweck"
+
+#: includes/admin/settings.php:43
+msgid "Enter you reason"
+msgstr "Den Verwendungszweck eingeben"
+
+#: includes/admin/settings.php:47
+msgid "Billing Details"
+msgstr "Rechnungsanschrift"
+
+#: includes/admin/settings.php:48
+msgid ""
+"This option will enable the billing details section for Sofort. which "
+"requires the donor's address to complete the donation. These fields are not "
+"required by Sofort.com to process the transaction, but you may have a need "
+"to collect the data."
+msgstr ""
+"Diese Option aktiviert die Erfassung von Rechnungsanschrift bei der "
+"Sofortüberweisung. Die Daten werden nicht zur Zahlungsabwicklung benötigt, "
+"es kann aber sein dass diese zur Spendenabwicklung erfasst werden müssen."
+
+#: includes/admin/settings.php:53 includes/admin/settings.php:64
+msgid "Enabled"
+msgstr "Aktiviert"
+
+#: includes/admin/settings.php:54 includes/admin/settings.php:65
+msgid "Disabled"
+msgstr "Deaktiviert"
+
+#: includes/admin/settings.php:58
+msgid "Trust pending payments"
+msgstr "Ausstehende Zahlungen annehmen"
+
+#: includes/admin/settings.php:59
+msgid ""
+"This option will set the donation as success. Accept pending payments from "
+"sofort.com and complete donation."
+msgstr ""
+"Diese Option akzeptiert als ausstehend markierte Zahlungen als Spenden. "
+
+#: vendor/class-sofort-payment.php:207 vendor/class-sofort-payment.php:218
+#: vendor/class-sofort-payment.php:234 vendor/class-sofort-payment.php:245
+#, php-format
+msgid "Sofort Transaction ID: %s"
+msgstr "Sofort Transaktion ID: %s"
+
+#: vendor/class-sofort-payment.php:270 vendor/class-sofort-payment.php:281
+msgid "Sofort Payment Gateway"
+msgstr "Sofort Payment Gateway"
+
+#: vendor/class-sofort-payment.php:301
+msgid ""
+"Payment Pending: Please follow the instructions below to complete your "
+"donation."
+msgstr ""
+"Zahlung ausstehend: Bitte den Instruktionen folgen um die Spende "
+"vollständig abzuwickeln."
