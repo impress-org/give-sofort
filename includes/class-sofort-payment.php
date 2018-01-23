@@ -111,7 +111,7 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 				$payment_amount = give_donation_amount( $payment_id );
 				$api_amount     = (float) number_format( $payment_amount, 2, '.', '' );
 
-				$api_config_key = give_get_option( 'sofort_config_key' );
+				$api_config_key = $this->get_sofort_config_key();
 				$api_reason1    = give_get_option( 'sofort_reason' );
 				$api_reason2    = $payment_data['post_data']['give-form-title'];
 				$api_order_key  = $payment_data['purchase_key'];
@@ -156,6 +156,11 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 
 		}
 
+		/**
+		 * Payment listener.
+		 *
+		 * Waits for responses from gateway to determine charge success.
+		 */
 		public function give_sofort_payment_listener() {
 			$api = new Sofort\SofortLib\Notification();
 
@@ -165,9 +170,8 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 				$this->log_error( 'Getting notification failed. No transaction id.' );
 			}
 
-			$api_config_key    = give_get_option( 'sofort_config_key' );
+			$api_config_key    = $this->get_sofort_config_key();
 			$api_trust_pending = give_get_option( 'sofort_trust_pending' );
-
 			$transaction_data = new Sofort\SofortLib\TransactionData( $api_config_key );
 
 			$transaction_data->addTransaction( $transaction_id );
@@ -194,7 +198,7 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 					if ( 'not_credited_yet' == $reason && 'enabled' == $api_trust_pending ) :
 
 						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
 						give_set_payment_transaction_id( $payment_id, $transaction_id );
 						give_update_payment_status( $payment_id, 'publish' );
 
@@ -205,7 +209,7 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 					else :
 
 						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
 						give_set_payment_transaction_id( $payment_id, $transaction_id );
 						give_update_payment_status( $payment_id, 'pending' );
 
@@ -220,7 +224,7 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 					if ( $reason == 'credited' ) :
 
 						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
 						give_set_payment_transaction_id( $payment_id, $transaction_id );
 						give_update_payment_status( $payment_id, 'publish' );
 
@@ -231,7 +235,7 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 					else :
 
 						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
 						give_set_payment_transaction_id( $payment_id, $transaction_id );
 						give_update_payment_status( $payment_id, 'pending' );
 
@@ -256,7 +260,7 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 		 * @return int ID of the new log entry
 		 */
 		public function log_error( $message ) {
-	        return give_record_gateway_error( __( 'Sofort Payment Gateway', 'give-sofort' ), $message );
+			return give_record_gateway_error( __( 'Sofort Payment Gateway', 'give-sofort' ), $message );
 		}
 
 		/**
@@ -266,8 +270,8 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 		 *
 		 * @return int ID of the new log entry
 		 */
-	    public function log_message( $message ) {
-	        return give_record_log( __( 'Sofort Payment Gateway', 'give-sofort' ), $message, 0, 'api_request' );
+		public function log_message( $message ) {
+			return give_record_log( __( 'Sofort Payment Gateway', 'give-sofort' ), $message, 0, 'api_request' );
 		}
 
 		/**
@@ -290,6 +294,22 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 			return Give()->notices->print_frontend_notice( __( 'Payment Pending: Please follow the instructions below to complete your donation.', 'give-sofort' ), false, 'warning' );
 		}
 
+		/**
+		 * Get the LIVE/SANDBOX config key.
+		 */
+		public function get_sofort_config_key() {
+
+			//Test mode?
+			if ( give_is_test_mode() ) {
+				$api_config_key = give_get_option( 'live_sofort_config_key' );
+			} else {
+				// We're LIVE!
+				$api_config_key = give_get_option( 'sandbox_sofort_config_key' );
+			}
+
+			return apply_filters( 'give_get_sofort_config_key', $api_config_key );
+
+		}
 
 
 	} // give_process_sofort_payment()
