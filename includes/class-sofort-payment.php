@@ -4,11 +4,8 @@
  * @subpackage  Give
  * @author      Birgit Olzem
  * @contributor Sven Wagener
- * @copyright   2017, Birgit Olzem
- * @link        http://coachbirgit.com
- * @license     http://www.opensource.org/licenses/gpl-3.0.php GPL License
+ * @contributor Devin Walker
  */
-/** @define "GIVE_SOFORT_DIR" "/Users/coachbirgit/PhpstormProjects/give-sofort" */
 
 // No direct access is allowed
 if ( ! defined( 'ABSPATH' ) ) {
@@ -38,13 +35,11 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 		 */
 		public function __construct() {
 			// filters & actions
-
 			add_action( 'give_sofort_form', 'give_sofort_payment_form' );
 
 			add_action( 'give_gateway_sofort', array( $this, 'give_process_sofort_payment' ), 10, 1 );
 
 			add_action( 'give_handle_sofort_api_response', array( $this, 'give_sofort_payment_listener' ), 10, 1 );
-
 
 		}
 
@@ -62,9 +57,9 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 			 */
 			do_action( 'give_before_sofort_info_fields', $form_id );
 			?>
-            <fieldset id="give_sofort_payment_info">
+			<fieldset id="give_sofort_payment_info">
 				<?php echo stripslashes( $sofort_instructions ); ?>
-            </fieldset>
+			</fieldset>
 			<?php
 			/**
 			 * Fires after the Sofort info fields.
@@ -82,32 +77,30 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 		 *
 		 * @param $payment_data
 		 */
-		public function give_process_sofort_payment( $purchase_data ) {
+		public function give_process_sofort_payment( $payment_data ) {
 
 			$errors = give_get_errors();
 
 			// No errors: Continue with payment processing
 			if ( ! $errors ) {
 
-
 				$payment_data = array(
-					'price'           => $purchase_data['price'],
-					'give_form_title' => $purchase_data['post_data']['give-form-title'],
-					'give_form_id'    => intval( $purchase_data['post_data']['give-form-id'] ),
-					'give_price_id'   => isset( $purchase_data['post_data']['give-price-id'] ) ? $purchase_data['post_data']['give-price-id'] : '',
-					'date'            => $purchase_data['date'],
-					'user_email'      => $purchase_data['user_email'],
-					'purchase_key'    => $purchase_data['purchase_key'],
+					'price'           => $payment_data['price'],
+					'give_form_title' => $payment_data['post_data']['give-form-title'],
+					'give_form_id'    => intval( $payment_data['post_data']['give-form-id'] ),
+					'give_price_id'   => isset( $payment_data['post_data']['give-price-id'] ) ? $payment_data['post_data']['give-price-id'] : '',
+					'date'            => $payment_data['date'],
+					'user_email'      => $payment_data['user_email'],
+					'purchase_key'    => $payment_data['purchase_key'],
 					'currency'        => give_get_currency(),
-					'user_info'       => $purchase_data['user_info'],
+					'user_info'       => $payment_data['user_info'],
 					'status'          => 'pending',
 					/** THIS MUST BE SET TO PENDING TO AVOID PHP WARNINGS */
-					'gateway'         => 'sofort'
+					'gateway'         => 'sofort',
 					/** USE YOUR SLUG AGAIN HERE */
 				);
 
 				$payment_id = give_insert_payment( $payment_data );
-
 
 				/**
 				 * Here you will reach out to whatever payment processor you are building for and record a successful payment
@@ -115,13 +108,13 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 				 * If it's not correct, make $payment false and attach errors
 				 */
 
-				$payment_amount = give_get_payment_amount( $payment_id );
+				$payment_amount = give_donation_amount( $payment_id );
 				$api_amount     = (float) number_format( $payment_amount, 2, '.', '' );
 
 				$api_config_key = give_get_option( 'sofort_config_key' );
 				$api_reason1    = give_get_option( 'sofort_reason' );
-				$api_reason2    = $purchase_data['post_data']['give-form-title'];
-				$api_order_key  = $purchase_data['purchase_key'];
+				$api_reason2    = $payment_data['post_data']['give-form-title'];
+				$api_order_key  = $payment_data['purchase_key'];
 				$api_currency   = give_get_currency();
 				// Get the success url.
 				$api_success_page = add_query_arg( array(
@@ -132,7 +125,6 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 				$api_abort_page   = give_get_failed_transaction_uri();
 
 				$api_notification_url = home_url( '/?give-action=handle_sofort_api_response&payment-id=' . $payment_id );
-
 
 				$api = new Sofort\SofortLib\Sofortueberweisung( $api_config_key );
 
@@ -149,20 +141,18 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 				$api->sendRequest();
 
 				if ( $api->isError() ) {
-					// SOFORT-API didn't accept the data
-					echo $api->getError();
-				} else {
 
+					// SOFORT-API didn't accept the data.
+					echo $api->getError();
+
+				} else {
 
 					// buyer must be redirected to $paymentUrl else payment cannot be successfully completed!
 					$paymentUrl = $api->getPaymentUrl();
 					header( 'Location: ' . $paymentUrl );
 
 				}
-
-
-			} // end if $errors
-
+			} // End if().
 
 		}
 
@@ -204,7 +194,7 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 					if ( 'not_credited_yet' == $reason && 'enabled' == $api_trust_pending ) :
 
 						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
 						give_set_payment_transaction_id( $payment_id, $transaction_id );
 						give_update_payment_status( $payment_id, 'publish' );
 
@@ -212,10 +202,10 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 
 						exit;
 
-					else:
+					else :
 
 						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
 						give_set_payment_transaction_id( $payment_id, $transaction_id );
 						give_update_payment_status( $payment_id, 'pending' );
 
@@ -225,50 +215,49 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 
 					endif;
 
-				} else if ( 'received' === $status ) {
-
+				} elseif ( 'received' === $status ) {
 
 					if ( $reason == 'credited' ) :
 
 						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
 						give_set_payment_transaction_id( $payment_id, $transaction_id );
 						give_update_payment_status( $payment_id, 'publish' );
 
-						$this->log_message( 'Payment completed with reason: ' . $reason . ' for payment #' .  $payment_id . '.' );
+						$this->log_message( 'Payment completed with reason: ' . $reason . ' for payment #' . $payment_id . '.' );
 
 						exit;
 
-					else:
+					else :
 
 						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
 						give_set_payment_transaction_id( $payment_id, $transaction_id );
 						give_update_payment_status( $payment_id, 'pending' );
 
-						$this->log_message( 'Payment completed with reason: ' . $reason . ' for payment #' .  $payment_id . '.' );
+						$this->log_message( 'Payment completed with reason: ' . $reason . ' for payment #' . $payment_id . '.' );
 
 						exit;
 
 					endif;
 
-				}
+				}// End if().
 
 				return;
 
-			}
+			}// End if().
 		}
 
 		/**
-         * Logging error message
-         *
-         * @param string $message
-         *
+		 * Logging error message
+		 *
+		 * @param string $message
+		 *
 		 * @return int ID of the new log entry
 		 */
-        public function log_error( $message ) {
-	        return give_record_gateway_error( __('Sofort Payment Gateway', 'give-sofort' ), $message );
-        }
+		public function log_error( $message ) {
+	        return give_record_gateway_error( __( 'Sofort Payment Gateway', 'give-sofort' ), $message );
+		}
 
 		/**
 		 * Logging message
@@ -278,8 +267,8 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 		 * @return int ID of the new log entry
 		 */
 	    public function log_message( $message ) {
-	        return give_record_log( __('Sofort Payment Gateway', 'give-sofort' ), $message, 0, 'api_request' );
-        }
+	        return give_record_log( __( 'Sofort Payment Gateway', 'give-sofort' ), $message, 0, 'api_request' );
+		}
 
 		/**
 		 * Set notice for Sofort donation.
@@ -287,7 +276,7 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 		 * @since 1.7
 		 *
 		 * @param string $notice
-		 * @param int $id
+		 * @param int    $id
 		 *
 		 * @return string
 		 */

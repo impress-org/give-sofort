@@ -1,134 +1,143 @@
 <?php
-/*
-* Plugin Name: Give Sofort - Sofort. Payment Solution
-* Plugin URI: https://github.com/CoachBirgit/give-sofort
-* Description: Extends the Give WP plugin with the payment gateway Sofort. from Sofort.com
-* Version: 1.0
-* Author: CoachBirgit
-* Author URI: http://coachbirgit.com
-* Text Domain: give-sofort
-* Domain Path: /languages
-* Give Sofort is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* any later version.
-*
-* Give Sofort is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with Give. If not, see <https://www.gnu.org/licenses/>.
-*
-* A Tribute to Open Source:
-*
-* "Open source software is software that can be freely used, changed, and shared (in modified or unmodified form) by anyone. Open
-* source software is made by many people, and distributed under licenses that comply with the Open Source Definition."
-*
-* -- The Open Source Initiative
-*/
+/**
+ * Plugin Name: Give - SOFORT
+ * Plugin URI: https://github.com/WordImpress/Give-Sofort
+ * Description: Accept donations with the SOFORT payment gateway.
+ * Version: 1.0
+ * Author: WordImpress, CoachBirgit
+ * Author URI: http://wordimpress.com
+ * Text Domain: give-sofort
+ * Domain Path: /languages
+ *
+ * Give Sofort is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * Give Sofort is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Give. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * A Tribute to Open Source:
+ *
+ * "Open source software is software that can be freely used, changed, and shared (in modified or unmodified form) by anyone. Open
+ * source software is made by many people, and distributed under licenses that comply with the Open Source Definition."
+ *
+ * -- The Open Source Initiative
+ */
 
 
-//Exit if accessed directly
-
+// Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-//Plugin version.
 if ( ! defined( 'GIVE_SOFORT_VERSION' ) ) {
-    define( 'GIVE_SOFORT_VERSION', '1.0' );
+	define( 'GIVE_SOFORT_VERSION', '1.0' );
 }
 
-// Plugin Folder Path.
+if ( ! defined( 'GIVE_SOFORT_MIN_GIVE_VER' ) ) {
+	define( 'GIVE_SOFORT_MIN_GIVE_VER', '2.0' );
+}
+
+if ( ! defined( 'GIVE_SOFORT_FILE' ) ) {
+	define( 'GIVE_SOFORT_FILE', __FILE__ );
+}
+
+if ( ! defined( 'GIVE_SOFORT_BASENAME' ) ) {
+	define( 'GIVE_SOFORT_BASENAME', plugin_basename( GIVE_SOFORT_FILE ) );
+}
+
+
 if ( ! defined( 'GIVE_SOFORT_DIR' ) ) {
-    define( 'GIVE_SOFORT_DIR', plugin_dir_path( __FILE__ ) );
-	/** @define "GIVE_SOFORT_DIR" "/Users/coachbirgit/PhpstormProjects/give-sofort" */
+	define( 'GIVE_SOFORT_DIR', plugin_dir_path( GIVE_SOFORT_FILE ) );
 }
 
-//Plugin Folder URL.
 if ( ! defined( 'GIVE_SOFORT_URL' ) ) {
-    define( 'GIVE_SOFORT_URL', plugin_dir_url( __FILE__ ) );
+	define( 'GIVE_SOFORT_URL', plugin_dir_url( GIVE_SOFORT_FILE ) );
 }
 
-// Sofort API Version that Give uses.
-if ( ! defined( 'GIVE_SOFORT_API_VERSION' ) ) {
-    define( 'GIVE_SOFORT_API_VERSION', apply_filters( 'give_sofort_api_version', '' ) );
+
+if ( file_exists( GIVE_SOFORT_DIR . 'vendor/autoload.php' ) ) {
+	require GIVE_SOFORT_DIR . 'vendor/autoload.php';
 }
-require GIVE_SOFORT_DIR . 'vendor/autoload.php';
+
 /**
  * Class Give_Sofort_Gateway
  */
 class Give_Sofort_Gateway {
 
 
+	/** Singleton *************************************************************/
 
-    /** Singleton *************************************************************/
-
-    /**
-     * @var Give_Sofort_Gateway The one true Give_Sofort_Gateway
-     */
-    private static $instance;
-
+	/**
+	 * @var Give_Sofort_Gateway The one true Give_Sofort_Gateway
+	 */
+	private static $instance;
 
 
-    /**
-     * Main Sofort Instance
-     *
-     * @since     v1.0
-     * @static var array $instance
-     * @return    Give_Sofort_Gateway()
-     */
-    public static function instance() {
-        if ( ! isset( self::$instance ) ) {
-            self::$instance = new Give_Sofort_Gateway();
-            self::$instance->sofort_init();
-        }
+	/**
+	 * Main Sofort Instance
+	 *
+	 * @since     v1.0
+	 * @static    var array $instance
+	 * @return    Give_Sofort_Gateway()
+	 */
+	public static function instance() {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new Give_Sofort_Gateway();
+			self::$instance->sofort_init();
+		}
 
-        return self::$instance;
-    }
-
-
-    function sofort_init() {
-
-        // Filters
-        add_filter( 'give_payment_gateways', array( $this, 'register_gateway' ) );
+		return self::$instance;
+	}
 
 
-        // Actions
-	    add_action( 'plugins_loaded', 'my_plugin_load_plugin_textdomain' );
-        //Sofort Gateway does not need a CC form, so remove it.
-        add_action( 'give_sofort_cc_form', '__return_false' );
+	function sofort_init() {
 
-        //Includes
-        include_once GIVE_SOFORT_DIR . 'includes/admin/settings.php';
-	    include_once GIVE_SOFORT_DIR . 'vendor/class-sofort-payment.php';
+		// Filters
+		add_filter( 'give_payment_gateways', array( $this, 'register_gateway' ) );
 
-    }
+		// Actions
+		add_action( 'plugins_loaded', 'my_plugin_load_plugin_textdomain' );
 
-    /**
-     * Register Sofort Gateway
-     *
-     * @param $gateways
-     *
-     * @return mixed
-     */
-    public function register_gateway( $gateways ) {
+		// Sofort Gateway does not need a CC form, so remove it.
+		add_action( 'give_sofort_cc_form', '__return_false' );
 
+		// Includes
+		include_once GIVE_SOFORT_DIR . 'includes/admin/settings.php';
+		include_once GIVE_SOFORT_DIR . 'includes/class-sofort-payment.php';
 
-        $checkout_label = __( 'Sofort&uuml;berweisung', 'give-sofort' );
+	}
 
-        $gateways['sofort'] = array(
-            'admin_label'    => __( 'Sofort', 'give-sofort' ),
-            'checkout_label' => $checkout_label
-        );
+	/**
+	 * Register Sofort Gateway
+	 *
+	 * @param $gateways
+	 *
+	 * @return mixed
+	 */
+	public function register_gateway( $gateways ) {
 
-        return $gateways;
-    }
+		$checkout_label = __( 'Sofort&uuml;berweisung', 'give-sofort' );
 
+		$gateways['sofort'] = array(
+			'admin_label'    => __( 'Sofort', 'give-sofort' ),
+			'checkout_label' => $checkout_label,
+		);
+
+		return $gateways;
+	}
+
+	/**
+	 * Load plui
+	 */
 	function my_plugin_load_plugin_textdomain() {
-		load_plugin_textdomain( 'give-sofort', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'give-sofort', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 
 }
@@ -149,11 +158,20 @@ class Give_Sofort_Gateway {
 
 function Give_Sofort() {
 
-    if ( ! class_exists( 'Give' ) ) {
-        return false;
-    }
+	if ( ! class_exists( 'Give' ) ) {
+		return false;
+	}
 
-    return Give_Sofort_Gateway::instance();
+	if ( is_admin() ) {
+		require_once GIVE_SOFORT_DIR . 'includes/admin/plugin-activation.php';
+	}
+
+	// Setup licence.
+	if ( class_exists( 'Give_License' ) ) {
+		new Give_License( GIVE_SOFORT_VERSION, 'SOFORT', GIVE_SOFORT_VERSION, 'WordImpress' );
+	}
+
+	return Give_Sofort_Gateway::instance();
 }
 
 add_action( 'plugins_loaded', 'Give_Sofort' );

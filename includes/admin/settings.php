@@ -27,25 +27,25 @@ function give_register_sofort_settings( $settings ) {
         ),
         array(
             'id'   => 'live_sofort_config_key',
-            'name' => __( 'Live config key', 'give-sofort' ),
-            'desc' => __( 'Enter your liveproject Sofort config key', 'give-sofort' ),
+            'name' => __( 'Live Config Key', 'give-sofort' ),
+            'desc' => __( 'Enter your LIVE project Sofort config key', 'give-sofort' ),
             'type' => 'text',
         ),
 	    array(
 		    'id'   => 'sandbox_sofort_config_key',
-		    'name' => __( 'Test config key', 'give-sofort' ),
-		    'desc' => __( 'Enter your testproject Sofort config key', 'give-sofort' ),
+		    'name' => __( 'Test Config Key', 'give-sofort' ),
+		    'desc' => __( 'Enter your TEST project Sofort config key', 'give-sofort' ),
 		    'type' => 'text',
 	    ),
         array(
             'id'   => 'sofort_reason',
             'name' => __( 'Reason', 'give-sofort' ),
-            'desc' => __( 'Enter you reason', 'give-sofort' ),
+            'desc' => __( 'Enter your reason', 'give-sofort' ),
             'type' => 'text',
         ),
         array(
             'name'    => __( 'Billing Details', 'give' ),
-            'desc'    => __( 'This option will enable the billing details section for Sofort. which requires the donor\'s address to complete the donation. These fields are not required by Sofort.com to process the transaction, but you may have a need to collect the data.', 'give-sofort' ),
+            'desc'    => __( 'This option will enable the billing details section for Sofort which requires the donor\'s address to complete the donation. These fields are not required by Sofort.com to process the transaction, but you may have a need to collect the data.', 'give-sofort' ),
             'id'      => 'sofort_billing_details',
             'type'    => 'radio_inline',
             'default' => 'disabled',
@@ -55,7 +55,7 @@ function give_register_sofort_settings( $settings ) {
             )
         ),
 	    array(
-		    'name'    => __( 'Trust pending payments', 'give' ),
+		    'name'    => __( 'Trust Pending Payments', 'give' ),
 		    'desc'    => __( 'This option will set the donation as success. Accept pending payments from sofort.com and complete donation.', 'give' ),
 		    'id'      => 'sofort_trust_pending',
 		    'type'    => 'radio_inline',

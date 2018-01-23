@@ -1,14 +1,14 @@
-# Give Sofort - Sofort. Banking Payment Solution
+# Give - Sofort Payment Gateway
 
 ## Description
 
-Extends the Give WP plugin with the payment gateway Sofort. Banking from Sofort.com
+
 
 ## Requirements
 
-- WordPress 4.0 or greater
+- WordPress 4.8 or greater
 - PHP version 7.0 or greater
-- MySQL version 5.6.or greater
+- MySQL version 5.6. or greater
 - Give WP 1.8. or greater
 - Sofort. Banking requires fsockopen support, libcurl and openssl (for IPN access)
 
