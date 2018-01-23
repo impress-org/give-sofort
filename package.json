@@ -1,0 +1,11 @@
+{
+  "name": "give-sofort",
+  "devDependencies": {
+    "fs-extra": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-checktextdomain": "^1.0.2",
+    "gulp-readme-to-markdown": "0.2.x",
+    "gulp-sort": "^2.0.0",
+    "gulp-wp-pot": "^1.2.2"
+  }
+}

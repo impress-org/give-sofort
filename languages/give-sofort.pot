@@ -1,95 +1,129 @@
-# Copyright (C) 2017 Give
-# This file is distributed under the same license as the Give package.
-#, fuzzy
+# Copyright (C) 2018 Give-Sofort
+# This file is distributed under the same license as the Give-Sofort package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Give\n"
-"Report-Msgid-Bugs-To: https://github.com/WordImpress/Give/issues/new\n"
+"Project-Id-Version: Give-Sofort\n"
+"Report-Msgid-Bugs-To: https://github.com/WordImpress/Give-Sofort/issues/new\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Language-Team: WordImpress <info@wordimpress.com>\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"POT-Creation-Date: \n"
-"Last-Translator: \n"
-"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: give-sofort.php:118
+#: includes/admin/class-admin-settings.php:82
 msgid "Sofort&uuml;berweisung"
 msgstr ""
 
-#: give-sofort.php:121
-msgid "Sofort"
+#: includes/admin/class-admin-settings.php:131
+msgid "Payment Method Label"
 msgstr ""
 
-#: includes/admin/settings.php:23
-msgid "Sofort Settings"
+#: includes/admin/class-admin-settings.php:135
+msgid "Payment method label will be appear on frontend."
 msgstr ""
 
-#: includes/admin/settings.php:30
-msgid "Live config key"
+#: includes/admin/class-admin-settings.php:139
+msgid "Live Config Key"
 msgstr ""
 
-#: includes/admin/settings.php:31
-msgid "Enter your liveproject Sofort config key"
+#: includes/admin/class-admin-settings.php:140
+msgid "Enter your LIVE project Sofort config key"
 msgstr ""
 
-#: includes/admin/settings.php:36
-msgid "Test config key"
+#: includes/admin/class-admin-settings.php:145
+msgid "Test Config Key"
 msgstr ""
 
-#: includes/admin/settings.php:37
-msgid "Enter your testproject Sofort config key"
+#: includes/admin/class-admin-settings.php:146
+msgid "Enter your TEST project Sofort config key"
 msgstr ""
 
-#: includes/admin/settings.php:42
+#: includes/admin/class-admin-settings.php:151
 msgid "Reason"
 msgstr ""
 
-#: includes/admin/settings.php:43
-msgid "Enter you reason"
+#: includes/admin/class-admin-settings.php:152
+msgid "Enter your reason"
 msgstr ""
 
-#: includes/admin/settings.php:47
+#: includes/admin/class-admin-settings.php:156
 msgid "Billing Details"
 msgstr ""
 
-#: includes/admin/settings.php:48
-msgid "This option will enable the billing details section for Sofort. which requires the donor's address to complete the donation. These fields are not required by Sofort.com to process the transaction, but you may have a need to collect the data."
+#: includes/admin/class-admin-settings.php:157
+msgid "This option will enable the billing details section for Sofort which requires the donor's address to complete the donation. These fields are not required by Sofort.com to process the transaction, but you may have a need to collect the data."
 msgstr ""
 
-#: includes/admin/settings.php:53 includes/admin/settings.php:64
+#: includes/admin/class-admin-settings.php:162, includes/admin/class-admin-settings.php:173
 msgid "Enabled"
 msgstr ""
 
-#: includes/admin/settings.php:54 includes/admin/settings.php:65
+#: includes/admin/class-admin-settings.php:163, includes/admin/class-admin-settings.php:174
 msgid "Disabled"
 msgstr ""
 
-#: includes/admin/settings.php:58
-msgid "Trust pending payments"
+#: includes/admin/class-admin-settings.php:167
+msgid "Trust Pending Payments"
 msgstr ""
 
-#: includes/admin/settings.php:59
+#: includes/admin/class-admin-settings.php:168
 msgid "This option will set the donation as success. Accept pending payments from sofort.com and complete donation."
 msgstr ""
 
-#: vendor/class-sofort-payment.php:207 vendor/class-sofort-payment.php:218
-#: vendor/class-sofort-payment.php:234 vendor/class-sofort-payment.php:245
-#, php-format
+#: includes/admin/class-admin-settings.php:197
+msgid "Sofort"
+msgstr ""
+
+#: includes/admin/plugin-activation.php:48
+msgid "SOFORT Gateway"
+msgstr ""
+
+#: includes/admin/plugin-activation.php:71
+msgid "<strong>Activation Error:</strong> You must have the <a href=\"https://givewp.com/\" target=\"_blank\">Give</a> plugin installed and activated for the PayFast add-on to activate."
+msgstr ""
+
+#: includes/admin/plugin-activation.php:80
+msgid "<strong>Activation Error:</strong> You must have <a href=\"%1$s\" target=\"_blank\">Give</a> minimum version %2$s for the PayFast add-on to activate."
+msgstr ""
+
+#: includes/admin/plugin-activation.php:98
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/plugin-activation.php:133
+msgid "Documentation"
+msgstr ""
+
+#: includes/admin/plugin-activation.php:143
+msgid "Add-ons"
+msgstr ""
+
+#: includes/class-sofort-payment.php:94
+msgid "An error occurred while processing the donation: No valid API key found for Sofort."
+msgstr ""
+
+#: includes/class-sofort-payment.php:161
+msgid "Sofort Error"
+msgstr ""
+
+#: includes/class-sofort-payment.php:162
+msgid "Your donation could not be recorded, please try again. If you continue experiencing issues please contact the site administrator."
+msgstr ""
+
+#: includes/class-sofort-payment.php:218, includes/class-sofort-payment.php:229, includes/class-sofort-payment.php:244, includes/class-sofort-payment.php:255
 msgid "Sofort Transaction ID: %s"
 msgstr ""
 
-#: vendor/class-sofort-payment.php:270 vendor/class-sofort-payment.php:281
+#: includes/class-sofort-payment.php:280, includes/class-sofort-payment.php:291
 msgid "Sofort Payment Gateway"
 msgstr ""
 
-#: vendor/class-sofort-payment.php:301
+#: includes/class-sofort-payment.php:311
 msgid "Payment Pending: Please follow the instructions below to complete your donation."
 msgstr ""

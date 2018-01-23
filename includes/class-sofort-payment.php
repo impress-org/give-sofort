@@ -80,6 +80,8 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 		 * Sofort. Payments
 		 *
 		 * @param $payment_data
+		 *
+		 * @return bool
 		 */
 		public function give_process_sofort_payment( $payment_data ) {
 
@@ -156,8 +158,8 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 					// SOFORT-API didn't accept the data.
 					$error = $api->getError();
 
-					give_record_gateway_error( __( 'Sofort Error', 'give-payfast' ), $error, $api->getRawResponse() );
-					give_set_error( 'payment_not_recorded', __( 'Your donation could not be recorded, please try again. If you continue experiencing issues please contact the site administrator.', 'give-stripe' ) );
+					give_record_gateway_error( __( 'Sofort Error', 'give-sofort' ), $error, $api->getRawResponse() );
+					give_set_error( 'payment_not_recorded', __( 'Your donation could not be recorded, please try again. If you continue experiencing issues please contact the site administrator.', 'give-sofort' ) );
 					give_send_back_to_checkout( '?payment-mode=sofort' );
 
 				} else {

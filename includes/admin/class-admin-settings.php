@@ -153,25 +153,25 @@ if ( ! class_exists( 'Give_Sofort_Admin_Settings' ) ) :
 					'type' => 'text',
 				),
 				array(
-					'name'    => __( 'Billing Details', 'give' ),
+					'name'    => __( 'Billing Details', 'give-sofort' ),
 					'desc'    => __( 'This option will enable the billing details section for Sofort which requires the donor\'s address to complete the donation. These fields are not required by Sofort.com to process the transaction, but you may have a need to collect the data.', 'give-sofort' ),
 					'id'      => 'sofort_billing_details',
 					'type'    => 'radio_inline',
 					'default' => 'disabled',
 					'options' => array(
-						'enabled'  => __( 'Enabled', 'give' ),
-						'disabled' => __( 'Disabled', 'give' ),
+						'enabled'  => __( 'Enabled', 'give-sofort' ),
+						'disabled' => __( 'Disabled', 'give-sofort' ),
 					),
 				),
 				array(
-					'name'    => __( 'Trust Pending Payments', 'give' ),
-					'desc'    => __( 'This option will set the donation as success. Accept pending payments from sofort.com and complete donation.', 'give' ),
+					'name'    => __( 'Trust Pending Payments', 'give-sofort' ),
+					'desc'    => __( 'This option will set the donation as success. Accept pending payments from sofort.com and complete donation.', 'give-sofort' ),
 					'id'      => 'sofort_trust_pending',
 					'type'    => 'radio_inline',
 					'default' => 'enabled',
 					'options' => array(
-						'enabled'  => __( 'Enabled', 'give' ),
-						'disabled' => __( 'Disabled', 'give' ),
+						'enabled'  => __( 'Enabled', 'give-sofort' ),
+						'disabled' => __( 'Disabled', 'give-sofort' ),
 					),
 				),
 				array(
