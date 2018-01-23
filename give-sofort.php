@@ -98,9 +98,6 @@ class Give_Sofort_Gateway {
 		// Actions
 		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
-		// Sofort Gateway does not need a CC form, so remove it.
-		add_action( 'give_sofort_cc_form', '__return_false' );
-
 		// Includes
 		include_once GIVE_SOFORT_DIR . 'includes/admin/class-admin-settings.php';
 		include_once GIVE_SOFORT_DIR . 'includes/class-sofort-payment.php';

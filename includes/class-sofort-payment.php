@@ -37,12 +37,20 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 			add_action( 'give_sofort_form', 'give_sofort_payment_form' );
 			add_action( 'give_gateway_sofort', array( $this, 'give_process_sofort_payment' ), 10, 1 );
 			add_action( 'give_handle_sofort_api_response', array( $this, 'give_sofort_payment_listener' ), 10, 1 );
+			add_action( 'give_sofort_cc_form', array( $this, 'toggle_address_fields' ) );
 		}
 
 
+		/**
+		 * The sofort payment form.
+		 *
+		 * @param $form_id
+		 */
 		function give_sofort_payment_form( $form_id ) {
+
 			// Get sofort payment instruction.
 			$sofort_instructions = '';
+
 			ob_start();
 			/**
 			 * Fires before the Sofort info fields.
@@ -77,10 +85,21 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 
 			$errors = give_get_errors();
 
-			// No errors: Continue with payment processing
+			// Need API key to proceed.
+			$api_config_key = $this->get_sofort_config_key();
+
+			if ( empty( $api_config_key ) ) {
+				give_set_error( 'api_key_missing', __( 'An error occurred while processing the donation: No valid API key found for Sofort.', 'give-sofort' ) );
+
+				// Problems? Send back.
+				give_send_back_to_checkout( '?payment-mode=sofort' );
+				return false;
+			}
+
+			// No errors: Continue with payment processing.
 			if ( ! $errors ) {
 
-				$payment_data = array(
+				$data_to_send = array(
 					'price'           => $payment_data['price'],
 					'give_form_title' => $payment_data['post_data']['give-form-title'],
 					'give_form_id'    => intval( $payment_data['post_data']['give-form-id'] ),
@@ -91,12 +110,10 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 					'currency'        => give_get_currency(),
 					'user_info'       => $payment_data['user_info'],
 					'status'          => 'pending',
-					/** THIS MUST BE SET TO PENDING TO AVOID PHP WARNINGS */
 					'gateway'         => 'sofort',
-					/** USE YOUR SLUG AGAIN HERE */
 				);
 
-				$payment_id = give_insert_payment( $payment_data );
+				$payment_id = give_insert_payment( $data_to_send );
 
 				/**
 				 * Here you will reach out to whatever payment processor you are building for and record a successful payment
@@ -107,43 +124,45 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 				$payment_amount = give_donation_amount( $payment_id );
 				$api_amount     = (float) number_format( $payment_amount, 2, '.', '' );
 
-				$api_config_key = $this->get_sofort_config_key();
-				$api_reason1    = give_get_option( 'sofort_reason' );
-				$api_reason2    = $payment_data['post_data']['give-form-title'];
-				$api_order_key  = $payment_data['purchase_key'];
-				$api_currency   = give_get_currency();
+				$api_reason1   = give_get_option( 'sofort_reason' );
+				$api_reason2   = isset( $payment_data['post_data']['give-form-title'] ) ? $payment_data['post_data']['give-form-title'] : '';
+				$form_id       = isset( $payment_data['post_data']['give-form-id'] ) ? $payment_data['post_data']['give-form-id'] : '';
+				$api_order_key = isset( $payment_data['purchase_key'] ) ? $payment_data['purchase_key'] : '';
+				$api_currency  = give_get_currency( $form_id );
+
 				// Get the success url.
-				$api_success_page = add_query_arg( array(
+				$api_success_page     = add_query_arg( array(
 					'payment-confirmation' => 'sofort',
 					'payment-id'           => $payment_id,
 
 				), get_permalink( give_get_option( 'success_page' ) ) );
-				$api_abort_page   = give_get_failed_transaction_uri();
-
+				$api_abort_page       = give_get_failed_transaction_uri();
 				$api_notification_url = home_url( '/?give-action=handle_sofort_api_response&payment-id=' . $payment_id );
 
 				$api = new Sofort\SofortLib\Sofortueberweisung( $api_config_key );
 
 				$api->setAmount( $api_amount );
-
 				$api->setCurrencyCode( $api_currency );
 				$api->setReason( $api_reason1, $api_reason2 );
 				$api->setUserVariable( $payment_id );
-
-				$api->setSuccessUrl( $api_success_page, true ); // i.e. http://my.shop/order/success
+				$api->setSuccessUrl( $api_success_page, true );
 				$api->setAbortUrl( $api_abort_page );
 				$api->setNotificationUrl( $api_notification_url );
-
 				$api->sendRequest();
 
+				// Check for error.
 				if ( $api->isError() ) {
 
 					// SOFORT-API didn't accept the data.
-					echo $api->getError();
+					$error = $api->getError();
+
+					give_record_gateway_error( __( 'Sofort Error', 'give-payfast' ), $error, $api->getRawResponse() );
+					give_set_error( 'payment_not_recorded', __( 'Your donation could not be recorded, please try again. If you continue experiencing issues please contact the site administrator.', 'give-stripe' ) );
+					give_send_back_to_checkout( '?payment-mode=sofort' );
 
 				} else {
 
-					// buyer must be redirected to $paymentUrl else payment cannot be successfully completed!
+					// Donor must be redirected to $paymentUrl else payment cannot be successfully completed!
 					$paymentUrl = $api->getPaymentUrl();
 					header( 'Location: ' . $paymentUrl );
 
@@ -168,7 +187,7 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 
 			$api_config_key    = $this->get_sofort_config_key();
 			$api_trust_pending = give_get_option( 'sofort_trust_pending' );
-			$transaction_data = new Sofort\SofortLib\TransactionData( $api_config_key );
+			$transaction_data  = new Sofort\SofortLib\TransactionData( $api_config_key );
 
 			$transaction_data->addTransaction( $transaction_id );
 
@@ -295,7 +314,7 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 		 */
 		public function get_sofort_config_key() {
 
-			//Test mode?
+			// Test mode?
 			if ( give_is_test_mode() ) {
 				$api_config_key = give_get_option( 'live_sofort_config_key' );
 			} else {
@@ -308,7 +327,28 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 		}
 
 
-	} // give_process_sofort_payment()
+		/**
+		 * Print cc field in donation form conditionally.
+		 *
+		 * @param int $form_id Donation Form ID.
+		 *
+		 * @since 1.0
+		 *
+		 * @return bool
+		 */
+		public function toggle_address_fields( $form_id ) {
+
+			if ( give_is_setting_enabled( give_get_option( 'sofort_billing_details' ) ) ) {
+				give_default_cc_address_fields( $form_id );
+
+				return true;
+			}
+
+			return false;
+		}
+
+
+	}
 
 	return new Give_Sofort_Gateway_Processor();
 
