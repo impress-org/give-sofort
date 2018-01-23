@@ -34,13 +34,9 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 		 * @uses    apply_filters()
 		 */
 		public function __construct() {
-			// filters & actions
 			add_action( 'give_sofort_form', 'give_sofort_payment_form' );
-
 			add_action( 'give_gateway_sofort', array( $this, 'give_process_sofort_payment' ), 10, 1 );
-
 			add_action( 'give_handle_sofort_api_response', array( $this, 'give_sofort_payment_listener' ), 10, 1 );
-
 		}
 
 

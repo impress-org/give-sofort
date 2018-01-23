@@ -71,14 +71,10 @@ if ( file_exists( GIVE_SOFORT_DIR . 'vendor/autoload.php' ) ) {
  */
 class Give_Sofort_Gateway {
 
-
-	/** Singleton *************************************************************/
-
 	/**
 	 * @var Give_Sofort_Gateway The one true Give_Sofort_Gateway
 	 */
 	private static $instance;
-
 
 	/**
 	 * Main Sofort Instance
@@ -97,46 +93,24 @@ class Give_Sofort_Gateway {
 	}
 
 
-	function sofort_init() {
-
-		// Filters
-		add_filter( 'give_payment_gateways', array( $this, 'register_gateway' ) );
+	public function sofort_init() {
 
 		// Actions
-		add_action( 'plugins_loaded', 'my_plugin_load_plugin_textdomain' );
+		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
 		// Sofort Gateway does not need a CC form, so remove it.
 		add_action( 'give_sofort_cc_form', '__return_false' );
 
 		// Includes
-		include_once GIVE_SOFORT_DIR . 'includes/admin/settings.php';
+		include_once GIVE_SOFORT_DIR . 'includes/admin/class-admin-settings.php';
 		include_once GIVE_SOFORT_DIR . 'includes/class-sofort-payment.php';
 
 	}
 
 	/**
-	 * Register Sofort Gateway
-	 *
-	 * @param $gateways
-	 *
-	 * @return mixed
+	 * Load textdomain for translations.
 	 */
-	public function register_gateway( $gateways ) {
-
-		$checkout_label = __( 'Sofort&uuml;berweisung', 'give-sofort' );
-
-		$gateways['sofort'] = array(
-			'admin_label'    => __( 'Sofort', 'give-sofort' ),
-			'checkout_label' => $checkout_label,
-		);
-
-		return $gateways;
-	}
-
-	/**
-	 * Load plui
-	 */
-	function my_plugin_load_plugin_textdomain() {
+	public function load_plugin_textdomain() {
 		load_plugin_textdomain( 'give-sofort', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 
