@@ -1,7 +1,6 @@
 # Change Log
 
-## [Unreleased](https://github.com/WordImpress/Give-Sofort/tree/HEAD)
-
+## [1.0](https://github.com/WordImpress/Give-Sofort/tree/1.0) (2018-01-28)
 **Implemented enhancements:**
 
 - Check i10n and create a .pot file [\#2](https://github.com/WordImpress/Give-Sofort/issues/2)
