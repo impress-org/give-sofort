@@ -29,54 +29,54 @@ msgid "Payment method label will be appear on frontend."
 msgstr ""
 
 #: includes/admin/class-admin-settings.php:139
-msgid "Live Config Key"
+msgid "Live Configuration Key"
 msgstr ""
 
 #: includes/admin/class-admin-settings.php:140
-msgid "Enter your LIVE project Sofort config key"
+msgid "Enter your LIVE project Sofort configuration key"
 msgstr ""
 
 #: includes/admin/class-admin-settings.php:145
-msgid "Test Config Key"
+msgid "Test Configuration Key"
 msgstr ""
 
 #: includes/admin/class-admin-settings.php:146
-msgid "Enter your TEST project Sofort config key"
+msgid "Enter your TEST project Sofort configuration key"
 msgstr ""
 
 #: includes/admin/class-admin-settings.php:151
-msgid "Reason"
+msgid "Reason (Bank Descriptor)"
 msgstr ""
 
 #: includes/admin/class-admin-settings.php:152
-msgid "Enter your reason"
+msgid "This is the content that is displayed on the donor's bank account statement. This field is limited to only the following characters: '0-9', 'a-z', 'A-Z', ' ', '+', ',', '-', '.'. Maximum 27 characters allowed."
 msgstr ""
 
-#: includes/admin/class-admin-settings.php:156
-msgid "Billing Details"
+#: includes/admin/class-admin-settings.php:160
+msgid "Accept Billing Details"
 msgstr ""
 
-#: includes/admin/class-admin-settings.php:157
+#: includes/admin/class-admin-settings.php:161
 msgid "This option will enable the billing details section for Sofort which requires the donor's address to complete the donation. These fields are not required by Sofort.com to process the transaction, but you may have a need to collect the data."
 msgstr ""
 
-#: includes/admin/class-admin-settings.php:162, includes/admin/class-admin-settings.php:173
+#: includes/admin/class-admin-settings.php:166, includes/admin/class-admin-settings.php:177
 msgid "Enabled"
 msgstr ""
 
-#: includes/admin/class-admin-settings.php:163, includes/admin/class-admin-settings.php:174
+#: includes/admin/class-admin-settings.php:167, includes/admin/class-admin-settings.php:178
 msgid "Disabled"
 msgstr ""
 
-#: includes/admin/class-admin-settings.php:167
+#: includes/admin/class-admin-settings.php:171
 msgid "Trust Pending Payments"
 msgstr ""
 
-#: includes/admin/class-admin-settings.php:168
-msgid "This option will set the donation as success. Accept pending payments from sofort.com and complete donation."
+#: includes/admin/class-admin-settings.php:172
+msgid "This option will set the donation as successful regardless of whether Sofort has reported it back to Give as successful or not. Accepting pending payments from sofort.com and complete the donation."
 msgstr ""
 
-#: includes/admin/class-admin-settings.php:197
+#: includes/admin/class-admin-settings.php:201
 msgid "Sofort"
 msgstr ""
 
@@ -108,7 +108,7 @@ msgstr ""
 msgid "An error occurred while processing the donation: No valid API key found for Sofort."
 msgstr ""
 
-#: includes/class-sofort-payment.php:161
+#: includes/class-sofort-payment.php:161, includes/class-sofort-payment.php:172
 msgid "Sofort Error"
 msgstr ""
 
@@ -116,14 +116,14 @@ msgstr ""
 msgid "Your donation could not be recorded, please try again. If you continue experiencing issues please contact the site administrator."
 msgstr ""
 
-#: includes/class-sofort-payment.php:218, includes/class-sofort-payment.php:229, includes/class-sofort-payment.php:244, includes/class-sofort-payment.php:255
+#: includes/class-sofort-payment.php:225, includes/class-sofort-payment.php:236, includes/class-sofort-payment.php:251, includes/class-sofort-payment.php:262
 msgid "Sofort Transaction ID: %s"
 msgstr ""
 
-#: includes/class-sofort-payment.php:280, includes/class-sofort-payment.php:291
+#: includes/class-sofort-payment.php:287, includes/class-sofort-payment.php:298
 msgid "Sofort Payment Gateway"
 msgstr ""
 
-#: includes/class-sofort-payment.php:311
+#: includes/class-sofort-payment.php:318
 msgid "Payment Pending: Please follow the instructions below to complete your donation."
 msgstr ""

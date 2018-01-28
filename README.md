@@ -1,10 +1,10 @@
 # Give - Sofort Gateway #
 
-SOFORT Gateway Add-on for Give.
+Sofort Gateway Add-on for Give.
 
 ## Description ##
 
-This plugin requires the Give plugin activated to function properly. When activated, it adds a payment gateway for SOFORT.
+This plugin requires the Give plugin activated to function properly. When activated, it adds a payment gateway for Sofort.
 
 ## Installation ##
 
