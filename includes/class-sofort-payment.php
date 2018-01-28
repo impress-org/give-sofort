@@ -318,10 +318,10 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 
 			// Test mode?
 			if ( give_is_test_mode() ) {
-				$api_config_key = give_get_option( 'live_sofort_config_key' );
+				$api_config_key = give_get_option( 'sandbox_sofort_config_key' );
 			} else {
 				// We're LIVE!
-				$api_config_key = give_get_option( 'sandbox_sofort_config_key' );
+				$api_config_key = give_get_option( 'live_sofort_config_key' );
 			}
 
 			return apply_filters( 'give_get_sofort_config_key', $api_config_key );
