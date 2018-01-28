@@ -136,15 +136,15 @@ if ( ! class_exists( 'Give_Sofort_Admin_Settings' ) ) :
 				),
 				array(
 					'id'   => 'live_sofort_config_key',
-					'name' => __( 'Live Config Key', 'give-sofort' ),
-					'desc' => __( 'Enter your LIVE project Sofort config key', 'give-sofort' ),
-					'type' => 'text',
+					'name' => __( 'Live Configuration Key', 'give-sofort' ),
+					'desc' => __( 'Enter your LIVE project Sofort configuration key', 'give-sofort' ),
+					'type' => 'api_key',
 				),
 				array(
 					'id'   => 'sandbox_sofort_config_key',
-					'name' => __( 'Test Config Key', 'give-sofort' ),
-					'desc' => __( 'Enter your TEST project Sofort config key', 'give-sofort' ),
-					'type' => 'text',
+					'name' => __( 'Test Configuration Key', 'give-sofort' ),
+					'desc' => __( 'Enter your TEST project Sofort configuration key', 'give-sofort' ),
+					'type' => 'api_key',
 				),
 				array(
 					'id'   => 'sofort_reason',
@@ -153,7 +153,7 @@ if ( ! class_exists( 'Give_Sofort_Admin_Settings' ) ) :
 					'type' => 'text',
 				),
 				array(
-					'name'    => __( 'Billing Details', 'give-sofort' ),
+					'name'    => __( 'Accept Billing Details', 'give-sofort' ),
 					'desc'    => __( 'This option will enable the billing details section for Sofort which requires the donor\'s address to complete the donation. These fields are not required by Sofort.com to process the transaction, but you may have a need to collect the data.', 'give-sofort' ),
 					'id'      => 'sofort_billing_details',
 					'type'    => 'radio_inline',
@@ -165,7 +165,7 @@ if ( ! class_exists( 'Give_Sofort_Admin_Settings' ) ) :
 				),
 				array(
 					'name'    => __( 'Trust Pending Payments', 'give-sofort' ),
-					'desc'    => __( 'This option will set the donation as success. Accept pending payments from sofort.com and complete donation.', 'give-sofort' ),
+					'desc'    => __( 'This option will set the donation as successful regardless of whether Sofort has reported it back to Give as successful or not. Accepting pending payments from sofort.com and complete the donation.', 'give-sofort' ),
 					'id'      => 'sofort_trust_pending',
 					'type'    => 'radio_inline',
 					'default' => 'enabled',
