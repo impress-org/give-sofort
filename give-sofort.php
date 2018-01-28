@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Give - SOFORT
+ * Plugin Name: Give - Sofort Payment Gateway
  * Plugin URI: https://github.com/WordImpress/Give-Sofort
- * Description: Accept donations with the SOFORT payment gateway.
+ * Description: Accept donations with the Sofort payment gateway.
  * Version: 1.0
  * Author: WordImpress, CoachBirgit
  * Author URI: http://wordimpress.com
@@ -139,7 +139,7 @@ function Give_Sofort() {
 
 	// Setup licence.
 	if ( class_exists( 'Give_License' ) ) {
-		new Give_License( GIVE_SOFORT_VERSION, 'SOFORT', GIVE_SOFORT_VERSION, 'WordImpress' );
+		new Give_License( GIVE_SOFORT_VERSION, 'Sofort', GIVE_SOFORT_VERSION, 'WordImpress' );
 	}
 
 	return Give_Sofort_Gateway::instance();

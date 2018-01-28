@@ -1,17 +1,17 @@
 === Give - Sofort Gateway ===
 Contributors: wordimpress
-Tags: donations, donation, ecommerce, e-commerce, fundraising, fundraiser, SOFORT, gateway
+Tags: donations, donation, ecommerce, e-commerce, fundraising, fundraiser, SOFORT, Sofort, gateway
 Requires at least: 4.8
 Tested up to: 4.9
 Stable tag: 1.0
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
-SOFORT Gateway Add-on for Give.
+Sofort Gateway Add-on for Give.
 
 == Description ==
 
-This plugin requires the Give plugin activated to function properly. When activated, it adds a payment gateway for SOFORT.
+This plugin requires the Give plugin activated to function properly. When activated, it adds a payment gateway for Sofort.
 
 == Installation ==
 
