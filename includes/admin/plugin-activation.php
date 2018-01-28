@@ -35,9 +35,9 @@ function give_sofort_activation_banner() {
 	// Check for activation banner inclusion.
 	if (
 		! class_exists( 'Give_Addon_Activation_Banner' )
-		&& file_exists( GIVE_SOFORT_DIR . 'includes/admin/class-addon-activation-banner.php' )
+		&& file_exists( GIVE_PLUGIN_DIR . 'includes/admin/class-addon-activation-banner.php' )
 	) {
-		include GIVE_SOFORT_DIR . 'includes/admin/class-addon-activation-banner.php';
+		include GIVE_PLUGIN_DIR . 'includes/admin/class-addon-activation-banner.php';
 	}
 
 	// Initialize activation welcome banner.
@@ -45,7 +45,7 @@ function give_sofort_activation_banner() {
 
 		$args = array(
 			'file'              => GIVE_SOFORT_FILE,
-			'name'              => __( 'SOFORT Gateway', 'give-sofort' ),
+			'name'              => __( 'Sofort Gateway', 'give-sofort' ),
 			'version'           => GIVE_SOFORT_VERSION,
 			'settings_url'      => admin_url( 'edit.php?post_type=give_forms&page=give-settings&tab=gateways&section=sofort' ),
 			'documentation_url' => 'http://docs.givewp.com/addon-sofort',
