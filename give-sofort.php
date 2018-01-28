@@ -139,7 +139,7 @@ function Give_Sofort() {
 
 	// Setup licence.
 	if ( class_exists( 'Give_License' ) ) {
-		new Give_License( GIVE_SOFORT_VERSION, 'Sofort', GIVE_SOFORT_VERSION, 'WordImpress' );
+		new Give_License( GIVE_SOFORT_FILE, 'Sofort', GIVE_SOFORT_VERSION, 'WordImpress' );
 	}
 
 	return Give_Sofort_Gateway::instance();
