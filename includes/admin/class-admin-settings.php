@@ -78,7 +78,7 @@ if ( ! class_exists( 'Give_Sofort_Admin_Settings' ) ) :
 		 */
 		public function setup() {
 
-			$this->gateways_id    = 'sofort';
+			$this->gateways_id   = 'sofort';
 			$this->gateway_label = __( 'Sofort&uuml;berweisung', 'give-sofort' );
 
 			add_filter( 'give_get_settings_gateways', array( $this, 'add_settings' ) );
@@ -147,10 +147,14 @@ if ( ! class_exists( 'Give_Sofort_Admin_Settings' ) ) :
 					'type' => 'api_key',
 				),
 				array(
-					'id'   => 'sofort_reason',
-					'name' => __( 'Reason', 'give-sofort' ),
-					'desc' => __( 'Enter your reason', 'give-sofort' ),
-					'type' => 'text',
+					'id'         => 'sofort_reason',
+					'name'       => __( 'Reason (Bank Descriptor)', 'give-sofort' ),
+					'desc'       => __( 'This is the content that is displayed on the donor\'s bank account statement. This field is limited to only the following characters: \'0-9\', \'a-z\', \'A-Z\', \' \', \'+\', \',\', \'-\', \'.\'. Maximum 27 characters allowed.', 'give-sofort' ),
+					'attributes' => array(
+						'maxlength' => '27',
+					),
+					'default'    => get_bloginfo( 'name' ),
+					'type'       => 'text',
 				),
 				array(
 					'name'    => __( 'Accept Billing Details', 'give-sofort' ),
