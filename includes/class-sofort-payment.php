@@ -95,6 +95,7 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 
 				// Problems? Send back.
 				give_send_back_to_checkout( '?payment-mode=sofort' );
+
 				return false;
 			}
 
@@ -122,7 +123,6 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 				 *
 				 * If it's not correct, make $payment false and attach errors
 				 */
-
 				$payment_amount = give_donation_amount( $payment_id );
 				$api_amount     = (float) number_format( $payment_amount, 2, '.', '' );
 
@@ -166,7 +166,14 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 
 					// Donor must be redirected to $paymentUrl else payment cannot be successfully completed!
 					$paymentUrl = $api->getPaymentUrl();
-					header( 'Location: ' . $paymentUrl );
+
+					if ( empty( $paymentUrl ) ) {
+						give_send_back_to_checkout( '?payment-mode=sofort' );
+						give_record_gateway_error( __( 'Sofort Error', 'give-sofort' ), 'getPaymentUrl', 'Unable to redirect to payment URL.' );
+					}
+
+					wp_redirect( $paymentUrl );
+					exit;
 
 				}
 			} // End if().
