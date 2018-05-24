@@ -127,7 +127,7 @@ class Give_Sofort_Gateway {
  * @return mixed one true Give_Sofort_Gateway Instance
  */
 
-function Give_Sofort() {
+function give_sofort() {
 
 	if ( ! class_exists( 'Give' ) ) {
 		return false;
@@ -145,4 +145,4 @@ function Give_Sofort() {
 	return Give_Sofort_Gateway::instance();
 }
 
-add_action( 'plugins_loaded', 'Give_Sofort' );
+add_action( 'plugins_loaded', 'give_sofort' );

@@ -169,7 +169,7 @@ if ( ! class_exists( 'Give_Sofort_Admin_Settings' ) ) :
 				),
 				array(
 					'name'    => __( 'Trust Pending Payments', 'give-sofort' ),
-					'desc'    => __( 'This option will set the donation as successful regardless of whether Sofort has reported it back to Give as successful or not. Accepting pending payments from sofort.com and complete the donation.', 'give-sofort' ),
+					'desc'    => __( 'This option will set the donation as successful regardless of whether Sofort has reported it back to Give as successful or not.', 'give-sofort' ),
 					'id'      => 'sofort_trust_pending',
 					'type'    => 'radio_inline',
 					'default' => 'enabled',

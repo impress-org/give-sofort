@@ -126,11 +126,10 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 				$payment_amount = give_donation_amount( $payment_id );
 				$api_amount     = (float) number_format( $payment_amount, 2, '.', '' );
 
-				$api_reason1   = give_get_option( 'sofort_reason' );
-				$api_reason2   = isset( $payment_data['post_data']['give-form-title'] ) ? $payment_data['post_data']['give-form-title'] : '';
-				$form_id       = isset( $payment_data['post_data']['give-form-id'] ) ? $payment_data['post_data']['give-form-id'] : '';
-				$api_order_key = isset( $payment_data['purchase_key'] ) ? $payment_data['purchase_key'] : '';
-				$api_currency  = give_get_currency( $form_id );
+				$api_reason1  = give_get_option( 'sofort_reason' );
+				$api_reason2  = isset( $payment_data['post_data']['give-form-title'] ) ? $payment_data['post_data']['give-form-title'] : '';
+				$form_id      = isset( $payment_data['post_data']['give-form-id'] ) ? $payment_data['post_data']['give-form-id'] : '';
+				$api_currency = give_get_currency( $form_id );
 
 				// Get the success url.
 				$api_success_page     = add_query_arg( array(
@@ -211,69 +210,64 @@ if ( ! class_exists( 'Give_Sofort_Gateway_Processor' ) ) :
 			$payment_id = $transaction_data->getUserVariable();
 			$status     = $transaction_data->getStatus();
 
-			/* @var Give_Payment $payment */
-			$payment = new Give_Payment( $payment_id );
-
 			$this->log_message( 'Payment listener for payment #' . $payment_id . ' initialized.' );
 
-			if ( $payment && 'pending' === $payment->post_status ) {
+			if ( 'pending' === $status || 'untraceable' === $status ) {
 
-				if ( 'pending' === $status || 'untraceable' === $status ) {
-					if ( 'not_credited_yet' == $reason && 'enabled' == $api_trust_pending ) :
+				if ( 'not_credited_yet' === $reason && 'enabled' === $api_trust_pending ) :
 
-						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
-						give_set_payment_transaction_id( $payment_id, $transaction_id );
-						give_update_payment_status( $payment_id, 'publish' );
+					give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
+						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+					give_set_payment_transaction_id( $payment_id, $transaction_id );
+					give_update_payment_status( $payment_id, 'publish' );
 
-						$this->log_message( 'Pending and not credited. Trusting payment. Payment completed for payment #' . $payment_id . '.' );
+					$this->log_message( 'Pending and not credited. Trusting payment. Payment completed for payment #' . $payment_id . '.' );
 
-						exit;
+					exit;
 
-					else :
+				else :
 
-						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
-						give_set_payment_transaction_id( $payment_id, $transaction_id );
-						give_update_payment_status( $payment_id, 'pending' );
+					give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
+						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+					give_set_payment_transaction_id( $payment_id, $transaction_id );
+					give_update_payment_status( $payment_id, 'pending' );
 
-						$this->log_message( 'Pending and not credited for payment #' . $payment_id . '.' );
+					$this->log_message( 'Pending and not credited for payment #' . $payment_id . '.' );
 
-						exit;
+					exit;
 
-					endif;
+				endif;
 
-				} elseif ( 'received' === $status ) {
+			} elseif ( 'received' === $status ) {
 
-					if ( $reason == 'credited' ) :
+				if ( 'credited' === $reason ) :
 
-						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
-						give_set_payment_transaction_id( $payment_id, $transaction_id );
-						give_update_payment_status( $payment_id, 'publish' );
+					give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
+						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+					give_set_payment_transaction_id( $payment_id, $transaction_id );
+					give_update_payment_status( $payment_id, 'publish' );
 
-						$this->log_message( 'Payment completed with reason: ' . $reason . ' for payment #' . $payment_id . '.' );
+					$this->log_message( 'Payment completed with reason: ' . $reason . ' for payment #' . $payment_id . '.' );
 
-						exit;
+					exit;
 
-					else :
+				else :
 
-						give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
-							__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
-						give_set_payment_transaction_id( $payment_id, $transaction_id );
-						give_update_payment_status( $payment_id, 'pending' );
+					give_insert_payment_note( $payment_id, sprintf( /* translators: %s: Sofort transaction ID */
+						__( 'Sofort Transaction ID: %s', 'give-sofort' ), $transaction_id ) );
+					give_set_payment_transaction_id( $payment_id, $transaction_id );
+					give_update_payment_status( $payment_id, 'pending' );
 
-						$this->log_message( 'Payment completed with reason: ' . $reason . ' for payment #' . $payment_id . '.' );
+					$this->log_message( 'Payment completed with reason: ' . $reason . ' for payment #' . $payment_id . '.' );
 
-						exit;
+					exit;
 
-					endif;
+				endif;
 
-				}// End if().
+			}
 
-				return;
+			return;
 
-			}// End if().
 		}
 
 		/**
