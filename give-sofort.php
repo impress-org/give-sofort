@@ -115,7 +115,11 @@ class Give_Sofort_Gateway {
 		add_action( 'admin_notices', array( $this, 'admin_notices' ), 15 );
 	}
 
-
+	/**
+	 * Init the plugin after plugins_loaded so environment variables are set.
+	 *
+	 * @since 1.0.1
+	 */
 	public function init() {
 
 		$this->load_plugin_textdomain();
@@ -140,6 +144,8 @@ class Give_Sofort_Gateway {
 
 	/**
 	 * Load textdomain for translations.
+	 *
+	 * @since 1.0.1
 	 */
 	public function load_plugin_textdomain() {
 		load_plugin_textdomain( 'give-sofort', false, basename( dirname( __FILE__ ) ) . '/languages/' );
@@ -148,7 +154,7 @@ class Give_Sofort_Gateway {
 	/**
 	 * Check plugin environment.
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.1
 	 * @access public
 	 *
 	 * @return bool
@@ -178,7 +184,7 @@ class Give_Sofort_Gateway {
 	/**
 	 * Check plugin for Give environment.
 	 *
-	 * @since  1.1.2
+	 * @since 1.0.1
 	 * @access public
 	 *
 	 * @return bool
@@ -206,7 +212,7 @@ class Give_Sofort_Gateway {
 	/**
 	 * Allow this class and other classes to add notices.
 	 *
-	 * @since 1.0
+	 * @since 1.0.1
 	 *
 	 * @param $slug
 	 * @param $class
@@ -222,7 +228,7 @@ class Give_Sofort_Gateway {
 	/**
 	 * Display admin notices.
 	 *
-	 * @since 1.0
+	 * @since 1.0.1
 	 */
 	public function admin_notices() {
 
@@ -252,7 +258,7 @@ class Give_Sofort_Gateway {
 	/**
 	 * Show activation banner for this add-on.
 	 *
-	 * @since 1.0
+	 * @since 1.0.1
 	 *
 	 * @return bool
 	 */
@@ -286,7 +292,7 @@ class Give_Sofort_Gateway {
 	/**
 	 * Implement Give Licensing for Give Sofort Add On.
 	 *
-	 * @since  1.0.1
+	 * @since 1.0.1
 	 * @access private
 	 */
 	private function licensing() {
