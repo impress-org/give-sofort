@@ -284,7 +284,7 @@ class Give_Sofort_Gateway {
 	}
 
 	/**
-	 * Implement Give Licensing for Give Mollie Add On.
+	 * Implement Give Licensing for Give Sofort Add On.
 	 *
 	 * @since  1.0.1
 	 * @access private
