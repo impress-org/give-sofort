@@ -16,6 +16,18 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: give-sofort.php:177
+msgid "<strong>Activation Error:</strong> You must have the <a href=\"%s\" target=\"_blank\">Give</a> plugin installed and activated for Give - Sofort to activate."
+msgstr ""
+
+#: give-sofort.php:204
+msgid "<strong>Activation Error:</strong> You must have the <a href=\"%s\" target=\"_blank\">Give</a> core version %s for the Give - Sofort add-on to activate."
+msgstr ""
+
+#: give-sofort.php:281
+msgid "Sofort Gateway"
+msgstr ""
+
 #: includes/admin/class-admin-settings.php:82
 msgid "Sofort&uuml;berweisung"
 msgstr ""
@@ -73,34 +85,22 @@ msgid "Trust Pending Payments"
 msgstr ""
 
 #: includes/admin/class-admin-settings.php:172
-msgid "This option will set the donation as successful regardless of whether Sofort has reported it back to Give as successful or not. Accepting pending payments from sofort.com and complete the donation."
+msgid "This option will set the donation as successful regardless of whether Sofort has reported it back to Give as successful or not."
 msgstr ""
 
 #: includes/admin/class-admin-settings.php:201
 msgid "Sofort"
 msgstr ""
 
-#: includes/admin/plugin-activation.php:48
-msgid "SOFORT Gateway"
-msgstr ""
-
-#: includes/admin/plugin-activation.php:71
-msgid "<strong>Activation Error:</strong> You must have the <a href=\"https://givewp.com/\" target=\"_blank\">Give</a> plugin installed and activated for the PayFast add-on to activate."
-msgstr ""
-
-#: includes/admin/plugin-activation.php:80
-msgid "<strong>Activation Error:</strong> You must have <a href=\"%1$s\" target=\"_blank\">Give</a> minimum version %2$s for the PayFast add-on to activate."
-msgstr ""
-
-#: includes/admin/plugin-activation.php:98
+#: includes/admin/plugin-activation.php:20
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/plugin-activation.php:133
+#: includes/admin/plugin-activation.php:55
 msgid "Documentation"
 msgstr ""
 
-#: includes/admin/plugin-activation.php:143
+#: includes/admin/plugin-activation.php:65
 msgid "Add-ons"
 msgstr ""
 
@@ -108,22 +108,22 @@ msgstr ""
 msgid "An error occurred while processing the donation: No valid API key found for Sofort."
 msgstr ""
 
-#: includes/class-sofort-payment.php:161, includes/class-sofort-payment.php:172
+#: includes/class-sofort-payment.php:160, includes/class-sofort-payment.php:171
 msgid "Sofort Error"
 msgstr ""
 
-#: includes/class-sofort-payment.php:162
+#: includes/class-sofort-payment.php:161
 msgid "Your donation could not be recorded, please try again. If you continue experiencing issues please contact the site administrator."
 msgstr ""
 
-#: includes/class-sofort-payment.php:225, includes/class-sofort-payment.php:236, includes/class-sofort-payment.php:251, includes/class-sofort-payment.php:262
+#: includes/class-sofort-payment.php:220, includes/class-sofort-payment.php:231, includes/class-sofort-payment.php:246, includes/class-sofort-payment.php:257
 msgid "Sofort Transaction ID: %s"
 msgstr ""
 
-#: includes/class-sofort-payment.php:287, includes/class-sofort-payment.php:298
+#: includes/class-sofort-payment.php:281, includes/class-sofort-payment.php:292
 msgid "Sofort Payment Gateway"
 msgstr ""
 
-#: includes/class-sofort-payment.php:318
+#: includes/class-sofort-payment.php:312
 msgid "Payment Pending: Please follow the instructions below to complete your donation."
 msgstr ""

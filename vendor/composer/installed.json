@@ -1,17 +1,17 @@
 [
     {
         "name": "sofort/sofortlib-php",
-        "version": "3.3.0",
-        "version_normalized": "3.3.0.0",
+        "version": "3.3.2",
+        "version_normalized": "3.3.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/sofort/sofortlib-php.git",
-            "reference": "f001db0b15fe48ff1ba9673f3b4e6babf687385b"
+            "reference": "0419b45b81d5cde71feb6e70103ac549c9a5ca9f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sofort/sofortlib-php/zipball/f001db0b15fe48ff1ba9673f3b4e6babf687385b",
-            "reference": "f001db0b15fe48ff1ba9673f3b4e6babf687385b",
+            "url": "https://api.github.com/repos/sofort/sofortlib-php/zipball/0419b45b81d5cde71feb6e70103ac549c9a5ca9f",
+            "reference": "0419b45b81d5cde71feb6e70103ac549c9a5ca9f",
             "shasum": ""
         },
         "require": {
@@ -23,7 +23,7 @@
         "suggest": {
             "ext-curl": "*"
         },
-        "time": "2017-07-03T13:37:20+00:00",
+        "time": "2018-05-28T12:02:52+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
