@@ -132,7 +132,7 @@ if ( ! class_exists( 'Give_Sofort_Admin_Settings' ) ) :
 					'id'      => 'sofort_checkout_label',
 					'type'    => 'text',
 					'default' => $this->get_payment_method_label(),
-					'desc'    => __( 'Payment method label will be appear on frontend.', 'give-sofort' ),
+					'desc'    => __( 'Payment method label will appear on the frontend.', 'give-sofort' ),
 				),
 				array(
 					'id'   => 'live_sofort_config_key',

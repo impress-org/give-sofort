@@ -37,7 +37,7 @@ msgid "Payment Method Label"
 msgstr ""
 
 #: includes/admin/class-admin-settings.php:135
-msgid "Payment method label will be appear on frontend."
+msgid "Payment method label will appear on the frontend."
 msgstr ""
 
 #: includes/admin/class-admin-settings.php:139
