@@ -21,9 +21,9 @@ gulp.task('pot', function () {
 			package: 'Give-Sofort',
 			domain: 'give-sofort', //textdomain
 			destFile: 'give-sofort.pot',
-			bugReport: 'https://github.com/WordImpress/Give-Sofort/issues/new',
+			bugReport: 'https://github.com/impress-org/give-sofort/issues/new',
 			lastTranslator: '',
-			team: 'WordImpress <info@wordimpress.com>'
+			team: 'WordImpress <info@givewp.com>'
 		}))
 		.pipe(gulp.dest('languages'));
 });

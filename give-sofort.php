@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Give - Sofort Payment Gateway
- * Plugin URI: https://github.com/WordImpress/Give-Sofort
+ * Plugin URI: https://givewp.com/addons/sofort/
  * Description: Accept donations with the Sofort payment gateway.
  * Version: 1.0
- * Author: WordImpress, CoachBirgit
- * Author URI: http://wordimpress.com
+ * Author: GiveWP
+ * Author URI: http://givewp.com
  * Text Domain: give-sofort
  * Domain Path: /languages
  *

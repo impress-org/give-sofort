@@ -9,6 +9,6 @@
     "gulp-wp-pot": "^1.2.2"
   },
   "dependencies": {
-    "natives": "^1.1.5"
+    "natives": "^1.1.6"
   }
 }

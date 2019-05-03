@@ -1,20 +1,20 @@
 # Change Log
 
-## [1.0](https://github.com/WordImpress/Give-Sofort/tree/1.0) (2018-01-28)
+## [1.0](https://github.com/impress-org/give-sofort/tree/1.0) (2018-01-28)
 **Implemented enhancements:**
 
-- Check i10n and create a .pot file [\#2](https://github.com/WordImpress/Give-Sofort/issues/2)
-- Extend the repo readme [\#1](https://github.com/WordImpress/Give-Sofort/issues/1)
+- Check i10n and create a .pot file [\#2](https://github.com/impress-org/give-sofort/issues/2)
+- Extend the repo readme [\#1](https://github.com/impress-org/give-sofort/issues/1)
 
 **Closed issues:**
 
-- Bug: Conflict with naming for the Sofort payment config\_key [\#7](https://github.com/WordImpress/Give-Sofort/issues/7)
-- Invoice Details Option does not work [\#6](https://github.com/WordImpress/Give-Sofort/issues/6)
-- Keep getting Error: 401:Unauthorized [\#5](https://github.com/WordImpress/Give-Sofort/issues/5)
+- Bug: Conflict with naming for the Sofort payment config\_key [\#7](https://github.com/impress-org/give-sofort/issues/7)
+- Invoice Details Option does not work [\#6](https://github.com/impress-org/give-sofort/issues/6)
+- Keep getting Error: 401:Unauthorized [\#5](https://github.com/impress-org/give-sofort/issues/5)
 
 **Merged pull requests:**
 
-- Added actual changes [\#3](https://github.com/WordImpress/Give-Sofort/pull/3) ([mahype](https://github.com/mahype))
+- Added actual changes [\#3](https://github.com/impress-org/give-sofort/pull/3) ([mahype](https://github.com/mahype))
 
 
 
